@@ -10,7 +10,7 @@ import java.util.logging.Logger;
 
 	public class DarkCraft extends Plugin{
 		String name = "DarkCraft";
-		String version = "1.0";
+		String version = "1.1";
 		String author = "Darkdiplomat";
 		static Logger log = Logger.getLogger("Minecraft");
 		Server server = etc.getServer();
@@ -75,6 +75,7 @@ import java.util.logging.Logger;
 		  for (int i = 0; i < recipes.size(); i++){
 			  int reItem, reAmount, reDamage = 0;
 			  boolean damagedresult = false;
+			  boolean bypass = false;
 			  Item item;
 			  int[] stacks = new int[30];
 			  String start = recipes.get(i);
@@ -117,7 +118,15 @@ import java.util.logging.Logger;
 					  String[] getstacks = splitup[j].split(",");
 					  stacks[n] = Integer.parseInt(getstacks[1]);
 					  stacks[n+1] = Integer.parseInt(getstacks[2]);
-					  stacks[n+2] = Integer.parseInt(getstacks[3]);
+					  try{
+						  stacks[n+2] = Integer.parseInt(getstacks[3]);
+					  }catch (ArrayIndexOutOfBoundsException AIOOE){
+						  bypass = true;
+						  stacks[n] = Integer.parseInt(getstacks[0]);
+						  stacks[n+1] = Integer.parseInt(getstacks[1]);
+						  stacks[n+2] = Integer.parseInt(getstacks[2]);
+						  n -= 1;
+					  }
 					  n += 3;
 				  }
 			  }
@@ -158,163 +167,240 @@ import java.util.logging.Logger;
 				  getChar = splitup[10].split(",");
 				  I = getChar[0].charAt(0);
 			  }
-			  if (splitup.length == 3){
-				  if (splitrecipeP1.length == 1){
-					  server.addRecipe(item, new Object[] { Row1, 
-							  Character.valueOf(A), new OItemStack(stacks[0],stacks[1], stacks[2])
-					  });
-				  }else if (splitrecipeP1.length == 2){
-					  server.addRecipe(item, new Object[] { Row1, Row2, 
-							  Character.valueOf(A), new OItemStack(stacks[0],stacks[1], stacks[2])
-					  });
-				  }else if (splitrecipeP1.length == 3){
-					  server.addRecipe(item, new Object[] { Row1, Row2, Row3, 
-							  Character.valueOf(A), new OItemStack(stacks[0],stacks[1], stacks[2])
-					  });
-				  }
-			  }else if (splitup.length == 4){
-				  if (splitrecipeP1.length == 1){
-					  server.addRecipe(item, new Object[] { Row1, 
-							  Character.valueOf(A), new OItemStack(stacks[0],stacks[1], stacks[2]), 
-							  Character.valueOf(B), new OItemStack(stacks[3],stacks[4], stacks[5])
-					  });
-				  }else if (splitrecipeP1.length == 2){
-					  server.addRecipe(item, new Object[] { Row1, Row2,
-							  A, new OItemStack(stacks[0],stacks[1], stacks[2]), 
-							  B, new OItemStack(stacks[3],stacks[4], stacks[5])
-					  });
-				  }else if (splitrecipeP1.length == 3){
-					  server.addRecipe(item, new Object[] { Row1, Row2, Row3, 
-							  Character.valueOf(A), new OItemStack(stacks[0],stacks[1], stacks[2]), 
-							  Character.valueOf(B), new OItemStack(stacks[3],stacks[4], stacks[5])
-					  });
-				  }
-			  }else if (splitup.length == 5){
-				  if (splitrecipeP1.length == 1){
-					  server.addRecipe(item, new Object[] { Row1, 
-							  Character.valueOf(A), new OItemStack(stacks[0],stacks[1], stacks[2]), 
-							  Character.valueOf(B), new OItemStack(stacks[3],stacks[4], stacks[5]),
-							  Character.valueOf(C), new OItemStack(stacks[6],stacks[7], stacks[8])
-					  });
-				  }else if (splitrecipeP1.length == 2){
-					  server.addRecipe(item, new Object[] { Row1, Row2, 
-							  Character.valueOf(A), new OItemStack(stacks[0],stacks[1], stacks[2]), 
-							  Character.valueOf(B), new OItemStack(stacks[3],stacks[4], stacks[5]),
-							  Character.valueOf(C), new OItemStack(stacks[6],stacks[7], stacks[8])
-					  });
-				  }else if (splitrecipeP1.length == 3){
-					  server.addRecipe(item, new Object[] { Row1, Row2, Row3, 
-							  Character.valueOf(A), new OItemStack(stacks[0],stacks[1], stacks[2]), 
-							  Character.valueOf(B), new OItemStack(stacks[3],stacks[4], stacks[5]),
-							  Character.valueOf(C), new OItemStack(stacks[6],stacks[7], stacks[8])
-					  });
-				  }
-			  }else if (splitup.length == 6){
-				  if (splitrecipeP1.length == 2){
-					  server.addRecipe(item, new Object[] { Row1, Row2, 
-							  Character.valueOf(A), new OItemStack(stacks[0],stacks[1], stacks[2]), 
-							  Character.valueOf(B), new OItemStack(stacks[3],stacks[4], stacks[5]),
-							  Character.valueOf(C), new OItemStack(stacks[6],stacks[7], stacks[8]),
-							  Character.valueOf(D), new OItemStack(stacks[9],stacks[10], stacks[11])
-					  });
-				  }else if (splitrecipeP1.length == 3){
-					  server.addRecipe(item, new Object[] { Row1, Row2, Row3, 
-							  Character.valueOf(A), new OItemStack(stacks[0],stacks[1], stacks[2]), 
-							  Character.valueOf(B), new OItemStack(stacks[3],stacks[4], stacks[5]),
-							  Character.valueOf(C), new OItemStack(stacks[6],stacks[7], stacks[8]),
-							  Character.valueOf(D), new OItemStack(stacks[9],stacks[10], stacks[11])
-					  });
-				  }
-			  }else if (splitup.length == 7){
-				  if (splitrecipeP1.length == 2){
-					  server.addRecipe(item, new Object[] { Row1, Row2, 
-							  Character.valueOf(A), new OItemStack(stacks[0],stacks[1], stacks[2]), 
-							  Character.valueOf(B), new OItemStack(stacks[3],stacks[4], stacks[5]),
-							  Character.valueOf(C), new OItemStack(stacks[6],stacks[7], stacks[8]),
-							  Character.valueOf(D), new OItemStack(stacks[9],stacks[10], stacks[11]),
-							  Character.valueOf(E), new OItemStack(stacks[12],stacks[13], stacks[14])
-					  });
-				  }else if (splitrecipeP1.length == 3){
-					  server.addRecipe(item, new Object[] { Row1, Row2, Row3, 
-							  Character.valueOf(A), new OItemStack(stacks[0],stacks[1], stacks[2]), 
-							  Character.valueOf(B), new OItemStack(stacks[3],stacks[4], stacks[5]),
-							  Character.valueOf(C), new OItemStack(stacks[6],stacks[7], stacks[8]),
-							  Character.valueOf(D), new OItemStack(stacks[9],stacks[10], stacks[11]),
-							  Character.valueOf(E), new OItemStack(stacks[12],stacks[13], stacks[14])
-					  });
-				  }
-			  }else if (splitup.length == 8){
-				  if (splitrecipeP1.length == 2){
-					  server.addRecipe(item, new Object[] { Row1, Row2, 
-							  Character.valueOf(A), new OItemStack(stacks[0],stacks[1], stacks[2]), 
-							  Character.valueOf(B), new OItemStack(stacks[3],stacks[4], stacks[5]),
-							  Character.valueOf(C), new OItemStack(stacks[6],stacks[7], stacks[8]),
-							  Character.valueOf(D), new OItemStack(stacks[9],stacks[10], stacks[11]),
-							  Character.valueOf(E), new OItemStack(stacks[12],stacks[13], stacks[14]),
-							  Character.valueOf(F), new OItemStack(stacks[15],stacks[16], stacks[17])
-					  });
-				  }else if (splitrecipeP1.length == 3){
-					  server.addRecipe(item, new Object[] { Row1, Row2, Row3, 
-							  Character.valueOf(A), new OItemStack(stacks[0],stacks[1], stacks[2]), 
-							  Character.valueOf(B), new OItemStack(stacks[3],stacks[4], stacks[5]),
-							  Character.valueOf(C), new OItemStack(stacks[6],stacks[7], stacks[8]),
-							  Character.valueOf(D), new OItemStack(stacks[9],stacks[10], stacks[11]),
-							  Character.valueOf(E), new OItemStack(stacks[12],stacks[13], stacks[14]),
-							  Character.valueOf(F), new OItemStack(stacks[15],stacks[16], stacks[17])
-					  });
-				  }
-			  }else if (splitup.length == 9){
-				  if (splitrecipeP1.length == 2){
-					  server.addRecipe(item, new Object[] { Row1, Row2, 
-							  Character.valueOf(A), new OItemStack(stacks[0],stacks[1], stacks[2]), 
-							  Character.valueOf(B), new OItemStack(stacks[3],stacks[4], stacks[5]),
-							  Character.valueOf(C), new OItemStack(stacks[6],stacks[7], stacks[8]),
-							  Character.valueOf(D), new OItemStack(stacks[9],stacks[10], stacks[11]),
-							  Character.valueOf(E), new OItemStack(stacks[12],stacks[13], stacks[14]),
-							  Character.valueOf(F), new OItemStack(stacks[15],stacks[16], stacks[17]),
-							  Character.valueOf(G), new OItemStack(stacks[18],stacks[19], stacks[20])
-					  });
-				  }else if (splitrecipeP1.length == 3){
-					  server.addRecipe(item, new Object[] { Row1, Row2, Row3, 
-							  Character.valueOf(A), new OItemStack(stacks[0],stacks[1], stacks[2]), 
-							  Character.valueOf(B), new OItemStack(stacks[3],stacks[4], stacks[5]),
-							  Character.valueOf(C), new OItemStack(stacks[6],stacks[7], stacks[8]),
-							  Character.valueOf(D), new OItemStack(stacks[9],stacks[10], stacks[11]),
-							  Character.valueOf(E), new OItemStack(stacks[12],stacks[13], stacks[14]),
-							  Character.valueOf(F), new OItemStack(stacks[15],stacks[16], stacks[17]),
-							  Character.valueOf(G), new OItemStack(stacks[18],stacks[19], stacks[20])
-					  });
-				  }
-			  }else if (splitup.length == 10){
-				  if (splitrecipeP1.length == 3){
-					  server.addRecipe(item, new Object[] { Row1, Row2, Row3,
-							  Character.valueOf(A), new OItemStack(stacks[0],stacks[1], stacks[2]), 
-							  Character.valueOf(B), new OItemStack(stacks[3],stacks[4], stacks[5]),
-							  Character.valueOf(C), new OItemStack(stacks[6],stacks[7], stacks[8]),
-							  Character.valueOf(D), new OItemStack(stacks[9],stacks[10], stacks[11]),
-							  Character.valueOf(E), new OItemStack(stacks[12],stacks[13], stacks[14]),
-							  Character.valueOf(F), new OItemStack(stacks[15],stacks[16], stacks[17]),
-							  Character.valueOf(G), new OItemStack(stacks[18],stacks[19], stacks[20]),
-							  Character.valueOf(H), new OItemStack(stacks[21],stacks[22], stacks[23])
-					  });
-				  }
-			  }else if (splitup.length == 11){
-				  if (splitrecipeP1.length == 3){
-					  server.addRecipe(item, new Object[] { Row1, Row2, Row3,
-							  Character.valueOf(A), new OItemStack(stacks[0],stacks[1], stacks[2]),
-							  Character.valueOf(B), new OItemStack(stacks[3],stacks[4], stacks[5]),
-							  Character.valueOf(C), new OItemStack(stacks[6],stacks[7], stacks[8]),
-							  Character.valueOf(D), new OItemStack(stacks[9],stacks[10], stacks[11]),
-							  Character.valueOf(E), new OItemStack(stacks[12],stacks[13], stacks[14]),
-							  Character.valueOf(F), new OItemStack(stacks[15],stacks[16], stacks[17]),
-							  Character.valueOf(G), new OItemStack(stacks[18],stacks[19], stacks[20]),
-							  Character.valueOf(H), new OItemStack(stacks[21],stacks[22], stacks[23]),
-							  Character.valueOf(I), new OItemStack(stacks[24],stacks[25], stacks[26])
-							  
-					  });
+			  if (!bypass){
+				  if (splitup.length == 3){
+					  if (splitrecipeP1.length == 1){
+						  server.addRecipe(item, new Object[] { Row1, 
+								  Character.valueOf(A), new OItemStack(stacks[0],stacks[1], stacks[2])
+						  });
+					  }else if (splitrecipeP1.length == 2){
+						  server.addRecipe(item, new Object[] { Row1, Row2, 
+								  Character.valueOf(A), new OItemStack(stacks[0],stacks[1], stacks[2])
+						  });
+					  }else if (splitrecipeP1.length == 3){
+						  server.addRecipe(item, new Object[] { Row1, Row2, Row3, 
+								  Character.valueOf(A), new OItemStack(stacks[0],stacks[1], stacks[2])
+						  });
+					  }
+				  }else if (splitup.length == 4){
+					  if (splitrecipeP1.length == 1){
+						  server.addRecipe(item, new Object[] { Row1, 
+								  Character.valueOf(A), new OItemStack(stacks[0],stacks[1], stacks[2]), 
+								  Character.valueOf(B), new OItemStack(stacks[3],stacks[4], stacks[5])
+						  });
+					  }else if (splitrecipeP1.length == 2){
+						  server.addRecipe(item, new Object[] { Row1, Row2,
+								  A, new OItemStack(stacks[0],stacks[1], stacks[2]), 
+								  B, new OItemStack(stacks[3],stacks[4], stacks[5])
+						  });
+					  }else if (splitrecipeP1.length == 3){
+						  server.addRecipe(item, new Object[] { Row1, Row2, Row3, 
+								  Character.valueOf(A), new OItemStack(stacks[0],stacks[1], stacks[2]), 
+								  Character.valueOf(B), new OItemStack(stacks[3],stacks[4], stacks[5])
+						  });
+					  }
+				  }else if (splitup.length == 5){
+					  if (splitrecipeP1.length == 1){
+						  server.addRecipe(item, new Object[] { Row1, 
+								  Character.valueOf(A), new OItemStack(stacks[0],stacks[1], stacks[2]), 
+								  Character.valueOf(B), new OItemStack(stacks[3],stacks[4], stacks[5]),
+								  Character.valueOf(C), new OItemStack(stacks[6],stacks[7], stacks[8])
+						  });
+					  }else if (splitrecipeP1.length == 2){
+						  server.addRecipe(item, new Object[] { Row1, Row2, 
+								  Character.valueOf(A), new OItemStack(stacks[0],stacks[1], stacks[2]), 
+								  Character.valueOf(B), new OItemStack(stacks[3],stacks[4], stacks[5]),
+								  Character.valueOf(C), new OItemStack(stacks[6],stacks[7], stacks[8])
+						  });
+					  }else if (splitrecipeP1.length == 3){
+						  server.addRecipe(item, new Object[] { Row1, Row2, Row3, 
+								  Character.valueOf(A), new OItemStack(stacks[0],stacks[1], stacks[2]), 
+								  Character.valueOf(B), new OItemStack(stacks[3],stacks[4], stacks[5]),
+								  Character.valueOf(C), new OItemStack(stacks[6],stacks[7], stacks[8])
+						  });
+					  }
+				  }else if (splitup.length == 6){
+					  if (splitrecipeP1.length == 2){
+						  server.addRecipe(item, new Object[] { Row1, Row2, 
+								  Character.valueOf(A), new OItemStack(stacks[0],stacks[1], stacks[2]), 
+								  Character.valueOf(B), new OItemStack(stacks[3],stacks[4], stacks[5]),
+								  Character.valueOf(C), new OItemStack(stacks[6],stacks[7], stacks[8]),
+								  Character.valueOf(D), new OItemStack(stacks[9],stacks[10], stacks[11])
+						  });
+					  }else if (splitrecipeP1.length == 3){
+						  server.addRecipe(item, new Object[] { Row1, Row2, Row3, 
+								  Character.valueOf(A), new OItemStack(stacks[0],stacks[1], stacks[2]), 
+								  Character.valueOf(B), new OItemStack(stacks[3],stacks[4], stacks[5]),
+								  Character.valueOf(C), new OItemStack(stacks[6],stacks[7], stacks[8]),
+								  Character.valueOf(D), new OItemStack(stacks[9],stacks[10], stacks[11])
+						  });
+					  }
+				  }else if (splitup.length == 7){
+					  if (splitrecipeP1.length == 2){
+						  server.addRecipe(item, new Object[] { Row1, Row2, 
+								  Character.valueOf(A), new OItemStack(stacks[0],stacks[1], stacks[2]), 
+								  Character.valueOf(B), new OItemStack(stacks[3],stacks[4], stacks[5]),
+								  Character.valueOf(C), new OItemStack(stacks[6],stacks[7], stacks[8]),
+								  Character.valueOf(D), new OItemStack(stacks[9],stacks[10], stacks[11]),
+								  Character.valueOf(E), new OItemStack(stacks[12],stacks[13], stacks[14])
+						  });
+					  }else if (splitrecipeP1.length == 3){
+						  server.addRecipe(item, new Object[] { Row1, Row2, Row3, 
+								  Character.valueOf(A), new OItemStack(stacks[0],stacks[1], stacks[2]), 
+								  Character.valueOf(B), new OItemStack(stacks[3],stacks[4], stacks[5]),
+								  Character.valueOf(C), new OItemStack(stacks[6],stacks[7], stacks[8]),
+								  Character.valueOf(D), new OItemStack(stacks[9],stacks[10], stacks[11]),
+								  Character.valueOf(E), new OItemStack(stacks[12],stacks[13], stacks[14])
+						  });
+					  }
+				  }else if (splitup.length == 8){
+					  if (splitrecipeP1.length == 2){
+						  server.addRecipe(item, new Object[] { Row1, Row2, 
+								  Character.valueOf(A), new OItemStack(stacks[0],stacks[1], stacks[2]), 
+								  Character.valueOf(B), new OItemStack(stacks[3],stacks[4], stacks[5]),
+								  Character.valueOf(C), new OItemStack(stacks[6],stacks[7], stacks[8]),
+								  Character.valueOf(D), new OItemStack(stacks[9],stacks[10], stacks[11]),
+								  Character.valueOf(E), new OItemStack(stacks[12],stacks[13], stacks[14]),
+								  Character.valueOf(F), new OItemStack(stacks[15],stacks[16], stacks[17])
+						  });
+					  }else if (splitrecipeP1.length == 3){
+						  server.addRecipe(item, new Object[] { Row1, Row2, Row3, 
+								  Character.valueOf(A), new OItemStack(stacks[0],stacks[1], stacks[2]), 
+								  Character.valueOf(B), new OItemStack(stacks[3],stacks[4], stacks[5]),
+								  Character.valueOf(C), new OItemStack(stacks[6],stacks[7], stacks[8]),
+								  Character.valueOf(D), new OItemStack(stacks[9],stacks[10], stacks[11]),
+								  Character.valueOf(E), new OItemStack(stacks[12],stacks[13], stacks[14]),
+								  Character.valueOf(F), new OItemStack(stacks[15],stacks[16], stacks[17])
+						  });
+					  }
+				  }else if (splitup.length == 9){
+					  if (splitrecipeP1.length == 2){
+						  server.addRecipe(item, new Object[] { Row1, Row2, 
+								  Character.valueOf(A), new OItemStack(stacks[0],stacks[1], stacks[2]), 
+								  Character.valueOf(B), new OItemStack(stacks[3],stacks[4], stacks[5]),
+								  Character.valueOf(C), new OItemStack(stacks[6],stacks[7], stacks[8]),
+								  Character.valueOf(D), new OItemStack(stacks[9],stacks[10], stacks[11]),
+								  Character.valueOf(E), new OItemStack(stacks[12],stacks[13], stacks[14]),
+								  Character.valueOf(F), new OItemStack(stacks[15],stacks[16], stacks[17]),
+								  Character.valueOf(G), new OItemStack(stacks[18],stacks[19], stacks[20])
+						  });
+					  }else if (splitrecipeP1.length == 3){
+						  server.addRecipe(item, new Object[] { Row1, Row2, Row3, 
+								  Character.valueOf(A), new OItemStack(stacks[0],stacks[1], stacks[2]), 
+								  Character.valueOf(B), new OItemStack(stacks[3],stacks[4], stacks[5]),
+								  Character.valueOf(C), new OItemStack(stacks[6],stacks[7], stacks[8]),
+								  Character.valueOf(D), new OItemStack(stacks[9],stacks[10], stacks[11]),
+								  Character.valueOf(E), new OItemStack(stacks[12],stacks[13], stacks[14]),
+								  Character.valueOf(F), new OItemStack(stacks[15],stacks[16], stacks[17]),
+								  Character.valueOf(G), new OItemStack(stacks[18],stacks[19], stacks[20])
+						  });
+					  }
+				  }else if (splitup.length == 10){
+					  if (splitrecipeP1.length == 3){
+						  server.addRecipe(item, new Object[] { Row1, Row2, Row3,
+								  Character.valueOf(A), new OItemStack(stacks[0],stacks[1], stacks[2]), 
+								  Character.valueOf(B), new OItemStack(stacks[3],stacks[4], stacks[5]),
+								  Character.valueOf(C), new OItemStack(stacks[6],stacks[7], stacks[8]),
+								  Character.valueOf(D), new OItemStack(stacks[9],stacks[10], stacks[11]),
+								  Character.valueOf(E), new OItemStack(stacks[12],stacks[13], stacks[14]),
+								  Character.valueOf(F), new OItemStack(stacks[15],stacks[16], stacks[17]),
+								  Character.valueOf(G), new OItemStack(stacks[18],stacks[19], stacks[20]),
+								  Character.valueOf(H), new OItemStack(stacks[21],stacks[22], stacks[23])
+						  });
+					  }
+				  }else if (splitup.length == 11){
+					  if (splitrecipeP1.length == 3){
+						  server.addRecipe(item, new Object[] { Row1, Row2, Row3,
+								  Character.valueOf(A), new OItemStack(stacks[0],stacks[1], stacks[2]),
+								  Character.valueOf(B), new OItemStack(stacks[3],stacks[4], stacks[5]),
+								  Character.valueOf(C), new OItemStack(stacks[6],stacks[7], stacks[8]),
+								  Character.valueOf(D), new OItemStack(stacks[9],stacks[10], stacks[11]),
+								  Character.valueOf(E), new OItemStack(stacks[12],stacks[13], stacks[14]),
+								  Character.valueOf(F), new OItemStack(stacks[15],stacks[16], stacks[17]),
+								  Character.valueOf(G), new OItemStack(stacks[18],stacks[19], stacks[20]),
+								  Character.valueOf(H), new OItemStack(stacks[21],stacks[22], stacks[23]),
+								  Character.valueOf(I), new OItemStack(stacks[24],stacks[25], stacks[26])
+								  
+						  });
+					  }
+				  }else{
+					  server.addShapelessRecipe(item, new Object[] {new OItemStack(stacks[0], stacks[1], stacks[2])});
 				  }
 			  }else{
-				  server.addShapelessRecipe(item, new Object[] {new OItemStack(stacks[0], stacks[1], stacks[2])});
+				  int byId1 = Integer.parseInt(Row1);
+				  int byA1 = Integer.parseInt(Row2);
+				  int byD1 = Integer.parseInt(Row3);
+
+				  if (splitup.length == 3){
+					  server.addShapelessRecipe(item, new Object[] {
+							  new OItemStack(byId1, byA1, byD1),
+							  new OItemStack(stacks[0],stacks[1], stacks[2])
+					  });
+					  log.info("Added our test");
+				  }else if (splitup.length == 4){
+					  server.addShapelessRecipe(item, new Object[] {
+							  new OItemStack(byId1, byA1, byD1), 
+							  new OItemStack(stacks[0],stacks[1], stacks[2]),
+							  new OItemStack(stacks[3],stacks[4], stacks[5])
+					  });
+				  }else if (splitup.length == 5){
+					  server.addShapelessRecipe(item, new Object[] {
+							  new OItemStack(byId1, byA1, byD1),
+							  new OItemStack(stacks[0],stacks[1], stacks[2]), 
+							  new OItemStack(stacks[3],stacks[4], stacks[5]),
+							  new OItemStack(stacks[6],stacks[7], stacks[8])
+					  });
+				  }else if (splitup.length == 6){
+					  server.addShapelessRecipe(item, new Object[] {
+							  new OItemStack(byId1, byA1, byD1), 
+							  new OItemStack(stacks[0],stacks[1], stacks[2]), 
+							  new OItemStack(stacks[3],stacks[4], stacks[5]),
+							  new OItemStack(stacks[6],stacks[7], stacks[8]),
+							  new OItemStack(stacks[9],stacks[10], stacks[11])
+						  });
+				  }else if (splitup.length == 7){
+					  server.addShapelessRecipe(item, new Object[] {
+							  new OItemStack(byId1, byA1, byD1),
+							  new OItemStack(stacks[0],stacks[1], stacks[2]),
+							  new OItemStack(stacks[3],stacks[4], stacks[5]),
+							  new OItemStack(stacks[6],stacks[7], stacks[8]),
+							  new OItemStack(stacks[9],stacks[10], stacks[11]),
+							  new OItemStack(stacks[12],stacks[13], stacks[14])
+						  });
+				  }else if (splitup.length == 8){
+					  server.addShapelessRecipe(item, new Object[] {
+							  new OItemStack(byId1, byA1, byD1),
+							  new OItemStack(stacks[0],stacks[1], stacks[2]),
+							  new OItemStack(stacks[3],stacks[4], stacks[5]),
+							  new OItemStack(stacks[6],stacks[7], stacks[8]),
+							  new OItemStack(stacks[9],stacks[10], stacks[11]),
+							  new OItemStack(stacks[12],stacks[13], stacks[14]),
+							  new OItemStack(stacks[15],stacks[16], stacks[17])
+						  });
+				  }else if (splitup.length == 9){
+					  server.addShapelessRecipe(item, new Object[] {
+							  new OItemStack(byId1, byA1, byD1), 
+							  new OItemStack(stacks[0],stacks[1], stacks[2]), 
+							  new OItemStack(stacks[3],stacks[4], stacks[5]),
+							  new OItemStack(stacks[6],stacks[7], stacks[8]),
+							  new OItemStack(stacks[9],stacks[10], stacks[11]),
+							  new OItemStack(stacks[12],stacks[13], stacks[14]),
+							  new OItemStack(stacks[15],stacks[16], stacks[17]),
+							  new OItemStack(stacks[18],stacks[19], stacks[20])
+						  });
+				  }else if (splitup.length == 10){
+					  server.addShapelessRecipe(item, new Object[] {
+							  new OItemStack(byId1, byA1, byD1),
+							  new OItemStack(stacks[0],stacks[1], stacks[2]), 
+							  new OItemStack(stacks[3],stacks[4], stacks[5]),
+							  new OItemStack(stacks[6],stacks[7], stacks[8]),
+							  new OItemStack(stacks[9],stacks[10], stacks[11]),
+							  new OItemStack(stacks[12],stacks[13], stacks[14]),
+							  new OItemStack(stacks[15],stacks[16], stacks[17]),
+							  new OItemStack(stacks[18],stacks[19], stacks[20]),
+							  new OItemStack(stacks[21],stacks[22], stacks[23])
+					  });
+				  }
 			  }
 		  }
 	  }
